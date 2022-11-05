@@ -14,7 +14,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/public_html"));
 
 mongoose.connect("mongodb://100.20.92.101:27017/URL-shortener", (err) => {
   if (err) {
@@ -34,7 +34,7 @@ const validateURL = async (req, res, next) => {
 };
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/index.html");
+  res.sendFile(__dirname + "/public_html/index.html");
 });
 
 app.post("/link", validateURL, (req, res) => {
@@ -59,7 +59,7 @@ app.get("/:id", async (req, res) => {
   const originalLink = await URL.findOne({ id });
 
   if (!originalLink) {
-    return res.sendFile(__dirname + "/public/404.html");
+    return res.sendFile(__dirname + "/public_html/404.html");
   }
   res.redirect(originalLink.url);
 });
