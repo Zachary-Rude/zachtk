@@ -61,7 +61,7 @@ app.get("/:id", async (req, res) => {
   if (!originalLink) {
     return res.sendFile(__dirname + "/public_html/404.html");
   }
-  res.redirect(originalLink.url);
+  res.redirect(301, originalLink.url);
 });
 
 app.listen(8000, () => {
