@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="notranslate">
+<head>
+<title>zach.tk: The free URL shortener by Zach, Inc.</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google" content="notranslate">
+<style>
+  body {
+    text-align: center !important;
+    padding-top: 15vh;
+  }
+
+  .fa.fa-link.fa-lg {
+    font-size: 2.5em !important;
+    margin-bottom: 24px;
+  }
+  
+  header {
+    margin-bottom: 3.375rem;
+  }
+  
+  form {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: auto !important;
+  }
+
+  input:focus::placeholder {
+    color: transparent;
+  }
+
+  @media only screen and (max-width: 576px) {
+    body {
+      padding-top: 9.375rem;
+    }
+  }
+
+  @media only screen and (min-width: 576px) {
+    form {
+      max-width: 800px;
+      margin: auto;
+    }
+  }
+</style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="shortcut icon" href="/img/favicon.png">
+</head>
+<header>
+  <span class="fa fa-link fa-lg" aria-hidden="true"></span>
+  <h1>zach.tk</h1>
+</header>
+
+<form method="post">
+  <input type="url" name="url" placeholder="http://example.com/" size="25" autocomplete="off" class="form-control shadow-none mr-sm-3 mb-xs-3 mb-sm-0" autocapitalize="off" spellcheck="false" title="Enter a URL here." required>
+  <input type="submit" value="Shorten" class="btn btn-primary shadow-none" />
+</form>
