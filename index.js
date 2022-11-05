@@ -62,7 +62,7 @@ app.get("/:id", async (req, res) => {
     return res.sendFile(__dirname + "/404.html");
   }
   res.set("cache-control","no-store")
-  res.redirect(originalLink.url);
+  return res.redirect(originalLink.url);
 });
 
 app.listen(8000, () => {
