@@ -1,135 +1,69 @@
-const bodyParser = require('body-parser');
-const express = require('express');
-const morgan = require('morgan');
-const Database = require('@replit/database');
-const { customAlphabet } = require('nanoid');
-const { readFile } = require('fs').promises;
-const fs = require("fs");
+import express from "express";
+import dotenv from "dotenv";
+import path from "path";
+import mongoose from "mongoose";
+import { nanoid } from "nanoid";
+import urlExist from "url-exist";
+import URL from "./models/urlModel.js";
 
-const db = new Database();
+const __dirname = path.resolve();
 
-const alphabet =
-  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-const size = 6;
-const nanoid = customAlphabet(alphabet, size);
-const idRegex = new RegExp(`^[${alphabet}]{${6}}$`);
+dotenv.config();
 
 const app = express();
 
-app.use(morgan("dev"));
-app.use(express.static(__dirname + "/public_html"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname + "/public"));
 
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
-
-process.on('unhandledRejection', function(err) {
-    console.log(err);
-    // sendInTheCalvary(err);
+mongoose.connect(process.env.MONGO_DB_URI, (err) => {
+  if (err) {
+    throw err;
+  }
+  console.log("Database connected successfully");
 });
 
-/**
- * GET /
- */
-app.get('/', async (req, res) => {
-  res.set('Content-Type', 'text/html');
-  res.sendFile(__dirname + "/public_html/index.html");
-});
-
-/**
- * POST /
- */
-app.post('/', urlencodedParser, async (req, res) => {
+// Middleware to validate url
+const validateURL = async (req, res, next) => {
   const { url } = req.body;
-  res.set('Content-Type', 'text/html');
-
-  if (!url) {
-    res.sendFile(__dirname + "/public_html/index.html");
-    return;
+  const isExist = await urlExist(url);
+  if (!isExist) {
+    return res.json({ message: "Invalid URL", type: "failure" });
   }
+  next();
+};
 
-  // ensure id is unique
-  let id;
-  while (true) {
-    id = nanoid();
-    try {
-      if (!(await db.get(id))) {
-        await db.set(id, url);
-        break;
-      }
-    } catch {}
-  }
-
-  const shortenedUrl = `https://${req.get('host')}/${id}`;
-
-  const block = `
-<p>
-  Shortened URL:
-  <a href="${shortenedUrl}" rel="noopener noreferrer" target="_blank">
-    ${shortenedUrl}
-  </a>
-</p>
-`;
-
-  const html = readFile("public_html/index.html");
-  res.send(await html + block);
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
 });
 
-/**
- * GET /:id
- */
-app.get('/:id', async (req, res, next) => {
-  const { id } = req.params;
+app.post("/link", validateURL, (req, res) => {
+  const { url } = req.body;
 
-  if (!idRegex.test(id)) {
-    return next();
-  }
+  // Generate a unique id to identify the url in the database
+  let id = nanoid(6);
 
-  const fullUrl = await db.get(id);
-  if (!fullUrl) {
-    return next();
-  }
-
-  res.redirect(301, fullUrl);
-});
-
-/*
-// empty databse (development)
-app.get('/db-empty', async (req, res, next) => {
-  await db.empty();
-  res.send('Database Emptied');
-});
-*/
-
-/**
- * 404
- */
-app.use((req, res) => {
-  res.status(404).sendFile(__dirname + "/404.html");
-});
-
-/**
- * GET /index.js
- */
-app.get("/index.js", (req, res, next) => {
-  res.status(404).sendFile(__dirname + "/404.html");
-});
-
-/**
- * GET /server.log
- */
-app.get("/server.log", (req, res, next) => {
+  let newURL = new URL({ url, id });
   try {
-    res.send(fs.readFileSync("./public_html/server.log"))
-  } catch {
-    res.status(403).sendFile(__dirname + "/403.html");
+    newURL.save();
+  } catch (err) {
+    res.send("An error was encountered! Please try again.");
   }
+  // Send the server address with the unique id
+  res.json({ message: `https://zach.tk/${newURL.id}`, type: "success" });
 });
 
-/**
- * Error
- */
-app.use((err, req, res, next) => {
-  next(err);
+app.get("/:id", async (req, res) => {
+  const id = req.params.id;
+
+  const originalLink = await URL.findOne({ id });
+
+  if (!originalLink) {
+    return res.sendFile(__dirname + "/public/404.html");
+  }
+  res.redirect(originalLink.url);
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log('Listening on port %d', port));
+app.listen(8000, () => {
+  console.log("App listening on port 8000");
+});
