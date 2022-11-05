@@ -45,7 +45,7 @@ app.post('/', urlencodedParser, async (req, res) => {
   let id;
   while (true) {
     id = nanoid();
-    if (!(await db.get(id))) {
+    if (!(db.get(id))) {
       await db.set(id, url);
       break;
     }
