@@ -41,7 +41,7 @@ app.post("/link", validateURL, (req, res) => {
   const { url } = req.body;
 
   // Generate a unique id to identify the url in the database
-  let id = nanoid(7);
+  let id = nanoid(6);
 
   let newURL = new URL({ url, id });
   try {
