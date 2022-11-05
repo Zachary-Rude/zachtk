@@ -6,8 +6,6 @@ const { nanoid } =  require("nanoid");
 const urlExist =  require("url-exist");
 const URL =  require("./models/urlModel.js");
 
-const __dirname = path.resolve();
-
 dotenv.config();
 
 const app = express();
