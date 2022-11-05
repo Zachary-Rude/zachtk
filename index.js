@@ -59,8 +59,9 @@ app.get("/:id", async (req, res) => {
   const originalLink = await URL.findOne({ id: id });
 
   if (!originalLink) {
-    return res.sendFile(__dirname + "/public_html/404.html");
+    return res.sendFile(__dirname + "/404.html");
   }
+  res.set("cache-control","no-store")
   res.redirect(301, originalLink.url);
 });
 
