@@ -23,8 +23,9 @@ const handleSubmit = async () => {
   if (response.type == "success") {
     linkWrapper.style.opacity = 1;
     linkWrapper.style.scale = 1;
-    linkWrapper.style.display = "flex";
+    linkWrapper.style.display = "block";
     shortenedLink.textContent = response.message;
+    shortenedLink.href = response.message;
     errorDiv.style.display = "none";
     input.style.border = "1px solid #ced4da";
   }
