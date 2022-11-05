@@ -1,9 +1,9 @@
-const express =  require("express");
-const path =  require("path");
-const mongoose =  require("mongoose");
-const { nanoid } =  require("nanoid");
-const urlExist =  require("url-exist");
-const URL =  require("./models/urlModel.js");
+const express = require("express");
+const path = require("path");
+const mongoose = require("mongoose");
+const { nanoid } = require("nanoid");
+const urlExist = require("url-exist");
+const URL = require("./models/urlModel.js");
 
 const app = express();
 
