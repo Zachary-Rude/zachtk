@@ -50,12 +50,16 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="shortcut icon" href="/img/favicon.png">
 </head>
+<body>
 <header>
   <span class="fa fa-link fa-lg" aria-hidden="true"></span>
   <h1>zach.tk</h1>
 </header>
 
 <form method="post">
-  <input type="url" name="url" placeholder="http://example.com/" size="25" autocomplete="off" class="form-control shadow-none mr-sm-3 mb-xs-3 mb-sm-0" autocapitalize="off" spellcheck="false" title="Enter a URL here." required>
+  <input type="url" name="url" placeholder="http://example.com/" size="25" autocomplete="off" class="form-control shadow-none mr-sm-3 mb-xs-3 mb-sm-0" autocapitalize="off" spellcheck="false" title="Enter a URL here." required id="url">
   <input type="submit" value="Shorten" class="btn btn-primary shadow-none" />
 </form>
+<p class="link-wrapper">Shortened URL: <span class="short-link"></span></p>
+</body>
+</html>
