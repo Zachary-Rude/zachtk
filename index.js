@@ -1,10 +1,10 @@
-import express from "express";
-import dotenv from "dotenv";
-import path from "path";
-import mongoose from "mongoose";
-import { nanoid } from "nanoid";
-import urlExist from "url-exist";
-import URL from "./models/urlModel.js";
+const express =  require("express");
+const dotenv =  require("dotenv");
+const path =  require("path");
+const mongoose =  require("mongoose");
+const { nanoid } =  require("nanoid");
+const urlExist =  require("url-exist");
+const URL =  require("./models/urlModel.js");
 
 const __dirname = path.resolve();
 
