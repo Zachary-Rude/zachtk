@@ -1,12 +1,9 @@
 const express =  require("express");
-const dotenv =  require("dotenv");
 const path =  require("path");
 const mongoose =  require("mongoose");
 const { nanoid } =  require("nanoid");
 const urlExist =  require("url-exist");
 const URL =  require("./models/urlModel.js");
-
-dotenv.config();
 
 const app = express();
 
@@ -14,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public_html"));
 
-mongoose.connect(process.env.MONGO_DB_URI, (err) => {
+mongoose.connect("mongodb://100.20.92.101:27017/URL-shortener", (err) => {
   if (err) {
     throw err;
   }
