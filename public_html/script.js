@@ -1,3 +1,10 @@
+const form = document.getElementById("form");
+const input = document.querySelector("input");
+const linkWrapper = document.querySelector(".link-wrapper");
+const errorDiv = document.querySelector(".error");
+
+const shortenedLink = document.querySelector(".short-link");
+
 const handleSubmit = async () => {
   let url = document.querySelector("#url").value;
   const response = await fetch("https://zach.tk/link", {
