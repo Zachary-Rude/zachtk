@@ -50,10 +50,12 @@ app.post('/', urlencodedParser, async (req, res) => {
   let id;
   while (true) {
     id = nanoid();
-    if (!(await db.get(id))) {
-      await db.set(id, url);
-      break;
-    }
+    try {
+      if (!(await db.get(id))) {
+        await db.set(id, url);
+        break;
+      }
+    } catch {}
   }
 
   const shortenedUrl = `https://${req.get('host')}/${id}`;
