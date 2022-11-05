@@ -56,7 +56,7 @@ app.post("/link", validateURL, (req, res) => {
 app.get("/:id", async (req, res) => {
   const id = req.params.id;
 
-  const originalLink = await URL.findOne({ id: id });
+  const originalLink = await URL.find({ id: id });
 
   if (!originalLink) {
     return res.sendFile(__dirname + "/404.html");
