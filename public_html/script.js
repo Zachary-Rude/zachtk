@@ -16,7 +16,8 @@ const handleSubmit = async () => {
   }).then((response) => response.json());
 
   if (response.type == "failure") {
-    input.style.border = "2px solid red";
+    input.style.border = "1px solid red";
+    errorDiv.style.display = "block";
     errorDiv.textContent = `${response.message}, please try another one!`;
   }
   if (response.type == "success") {
@@ -24,6 +25,8 @@ const handleSubmit = async () => {
     linkWrapper.style.scale = 1;
     linkWrapper.style.display = "flex";
     shortenedLink.textContent = response.message;
+    errorDiv.style.display = "none";
+    input.style.border = "1px solid #ced4da";
   }
 };
 
