@@ -21,6 +21,11 @@ app.use(express.static(__dirname + "/public_html"));
 
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+process.on('unhandledRejection', function(err) {
+    console.log(err);
+    // sendInTheCalvary(err);
+});
+
 /**
  * GET /
  */
@@ -45,7 +50,7 @@ app.post('/', urlencodedParser, async (req, res) => {
   let id;
   while (true) {
     id = nanoid();
-    if (!(db.get(id))) {
+    if (!(await db.get(id))) {
       await db.set(id, url);
       break;
     }
