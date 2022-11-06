@@ -49,12 +49,13 @@ app.post("/link", validateURL, (req, res) => {
 app.get("/:id", async (req, res) => {
   const id = req.params.id;
 
-  const originalLink = await URL.find({ id: id });
+  const originalLink = await URL.findOne({ id: id });
 
   if (!originalLink) {
     return res.sendFile(__dirname + "/404.html");
   }
   res.set("cache-control","no-store");
+  console.log(originalLink.url);
   res.status(301).redirect(originalLink.url);
 });
 
