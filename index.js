@@ -16,13 +16,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public_html"));
 
-mongoose.connect("mongodb://0.0.0.0:27017/URL-shortener", (err) => {
-  if (err) {
-    throw err;
-  }
-  console.log("Database connected successfully");
-});
-
 // Middleware to validate url
 const validateURL = async (req, res, next) => {
   const { url } = req.body;
