@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public_html"));
 
-mongoose.connect("mongodb://100.20.92.101:27017/URL-shortener", (err) => {
+mongoose.connect("mongodb://0.0.0.0:27017/URL-shortener", (err) => {
   if (err) {
     throw err;
   }
